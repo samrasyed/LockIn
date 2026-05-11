@@ -34,6 +34,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/users', userRoutes);
 
+app.get('/', (req, res) => {
+  res.send('FocusMate API is running');
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
