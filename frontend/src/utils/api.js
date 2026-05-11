@@ -4,7 +4,7 @@ export const TOKEN_STORAGE_KEY = 'LockIn_token';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || '/api',
-  timeout: 10000,
+  timeout: 30000,
   headers: { 'Content-Type': 'application/json' }
 });
 
