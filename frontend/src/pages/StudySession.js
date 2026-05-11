@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { Target } from 'lucide-react';
 
 const DEFAULT_ALARM_SETTINGS = {
   type: 'voice',
@@ -577,7 +578,7 @@ export default function StudySession() {
     setIsActive(true);
     await startCamera();
     loadModels();
-    toast.success('Session started! Stay focused! 🎯');
+    toast.success('Session started! Stay focused!');
   };
 
   // End session and save
@@ -639,7 +640,9 @@ export default function StudySession() {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <span style={styles.logo}>🎯 LockIn</span>
+        <span style={styles.logo} style={{ display: 'flex', alignItems: 'center', gap: '8px', ...styles.logo }}>
+          <Target size={24} color="#00e5a0" strokeWidth={2.5} /> LockIn
+        </span>
         <button style={styles.backBtn} onClick={() => { stopCamera(); stopCustomAudio(); navigate('/dashboard'); }}>
           ← Dashboard
         </button>

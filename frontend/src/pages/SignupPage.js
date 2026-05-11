@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Target } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import { getApiErrorMessage } from '../utils/apiError';
@@ -34,7 +35,9 @@ export default function SignupPage() {
         &larr; Back to Intro
       </button>
       <div style={styles.card}>
-        <div style={styles.logo}>🎯</div>
+        <div style={styles.logo}>
+          <Target size={48} color="#00e5a0" strokeWidth={2.5} />
+        </div>
         <h1 style={styles.title}>Join LockIn</h1>
         <p style={styles.subtitle}>Start your AI-powered study journey</p>
         <form onSubmit={handleSubmit} style={styles.form}>
