@@ -2,7 +2,22 @@ import axios from 'axios';
 
 export const TOKEN_STORAGE_KEY = 'LockIn_token';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+const getApiBaseUrl = () => {
+  const configuredApiUrl = process.env.REACT_APP_API_URL;
+  const isLocalApiUrl = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/.*)?$/i.test(configuredApiUrl || '');
+
+  if (configuredApiUrl && !(process.env.NODE_ENV === 'production' && isLocalApiUrl)) {
+    return configuredApiUrl;
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:5000/api';
+  }
+
+  return '/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,

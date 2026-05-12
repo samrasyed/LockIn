@@ -1,8 +1,11 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { waitForDatabase } = require('./database');
 
 const protect = async (req, res, next) => {
   try {
+    await waitForDatabase();
+
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ error: 'Access denied. No token provided.' });

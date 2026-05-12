@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
+const { requireDatabase } = require('../middleware/database');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ const signToken = (userId) => {
   );
 };
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', requireDatabase, async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const existing = await User.findOne({ email });
@@ -43,7 +44,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', requireDatabase, async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
