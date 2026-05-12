@@ -3,11 +3,6 @@
   "installCommand": "npm install --prefix backend && npm install --prefix frontend --legacy-peer-deps",
   "buildCommand": "npm run build --prefix frontend",
   "outputDirectory": "frontend/build",
-  "functions": {
-    "api/**/*.js": {
-      "maxDuration": 30
-    }
-  },
   "rewrites": [
     {
       "source": "/((?!api/).*)",

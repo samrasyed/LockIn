@@ -7,6 +7,7 @@ import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/DashboardConnected';
 import StudySession from './pages/StudySession';
 import IntroPage from './pages/IntroPage';
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -27,20 +28,23 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{
-          style: { background: '#171324', color: '#f3e8ff', border: '1px solid rgba(255,255,255,0.1)' }
-        }} />
-        <Routes>
-          <Route path="/" element={<PublicRoute><IntroPage /></PublicRoute>} />
-          <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          <Route path="/signup" element={<PublicRoute><SignupPage /></PublicRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/session" element={<ProtectedRoute><StudySession /></ProtectedRoute>} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter>
+          <Toaster position="top-right" toastOptions={{
+            style: { background: '#171324', color: '#f3e8ff', border: '1px solid rgba(255,255,255,0.1)' }
+          }} />
+          <Routes>
+            <Route path="/" element={<PublicRoute><IntroPage /></PublicRoute>} />
+            <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+            <Route path="/signup" element={<PublicRoute><SignupPage /></PublicRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/session" element={<ProtectedRoute><StudySession /></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
