@@ -8,7 +8,7 @@ const normalizePath = (path) => {
   return path || '';
 };
 
-module.exports = (req, res) => {
+const handler = (req, res) => {
   const path = normalizePath(req.query?.path);
 
   if (path) {
@@ -37,3 +37,6 @@ module.exports = (req, res) => {
 
   return app(req, res);
 };
+
+module.exports = handler;
+module.exports.default = handler;
