@@ -44,12 +44,22 @@ mongoose.connect(MONGO_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/auth', authRoutes);
+app.use('/sessions', sessionRoutes);
+app.use('/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('FocusMate API is running');
 });
 
 app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
+
+app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'

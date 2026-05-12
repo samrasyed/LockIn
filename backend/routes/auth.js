@@ -34,6 +34,7 @@ router.post('/signup', async (req, res) => {
       }
     });
   } catch (err) {
+    console.error('Signup error:', err);
     if (err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(e => e.message);
       return res.status(400).json({ error: messages.join('. ') });
@@ -65,6 +66,7 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ error: 'Server error during login.' });
   }
 });
