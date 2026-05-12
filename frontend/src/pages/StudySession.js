@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import { getApiErrorMessage } from '../utils/apiError';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { Target } from 'lucide-react';
@@ -599,11 +600,14 @@ export default function StudySession() {
     clearTimeout(speechTimeoutRef.current);
     if (window.speechSynthesis) window.speechSynthesis.cancel();
 
-    const duration = Math.round(seconds / 60);
+    const elapsedSeconds = startTimeRef.current
+      ? Math.max(seconds, Math.round((Date.now() - startTimeRef.current.getTime()) / 1000))
+      : seconds;
+    const duration = Math.max(1, Math.ceil(elapsedSeconds / 60));
     const finalMetrics = liveMetricsRef.current;
     const finalFocusScore = Math.round(computeTimeBasedFocusScore(finalMetrics));
-    if (duration < 1) {
-      toast.error('Session too short to save!');
+    if (elapsedSeconds < 1) {
+      toast.error('Start the session before saving.');
       navigate('/dashboard');
       return;
     }
@@ -628,9 +632,9 @@ export default function StudySession() {
         startTime: startTimeRef.current,
         endTime: new Date()
       });
-      toast.success(`Great session! ${duration} minutes saved! 🎉`);
+      toast.success(`Great session! ${duration} minute${duration === 1 ? '' : 's'} saved!`);
     } catch (err) {
-      toast.error('Failed to save session.');
+      toast.error(getApiErrorMessage(err, 'Failed to save session.'));
     }
     navigate('/dashboard');
   };

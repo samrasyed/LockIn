@@ -72,6 +72,11 @@ router.post('/', async (req, res) => {
 
     res.status(201).json({ session, streak: user.streak });
   } catch (err) {
+    console.error('Save session error:', err);
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({ error: messages.join('. ') });
+    }
     res.status(500).json({ error: 'Failed to save session.' });
   }
 });
