@@ -20,7 +20,7 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000')
 app.use(helmet());
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || /\.onrender\.com$/.test(new URL(origin).hostname)) {
+    if (!origin || allowedOrigins.includes(origin) || /\.(onrender|vercel)\.app$/.test(new URL(origin).hostname)) {
       return callback(null, true);
     }
 
@@ -61,6 +61,10 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 FocusMate server running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`FocusMate server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
