@@ -106,6 +106,14 @@ In a world where your data is the product,
 LockIn takes the opposite stance — 
 your privacy is the feature.
 
+
+Tech Stack
+
+React.js · Node.js · Express.js · MongoDB · 
+TensorFlow.js · BlazeFace · COCO-SSD · 
+JWT Auth · Web Speech API · Web Audio API · 
+REST API · Computer Vision · WebGL
+
  Why It Matters
 
 LockIn is not just a productivity tool. 
